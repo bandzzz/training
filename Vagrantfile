@@ -1,35 +1,57 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
 
-Vagrant.configure("2") do |config|
-config.vm.box = "bertvv/centos72"
-config.vm.provider "virtualbox" do |vb|
+#Quantity Tomcat VM
+TVM = 2
+
+Vagrant.configure('2') do |config|
+  config.vm.box = 'bertvv/centos72'
+  config.vm.provider 'virtualbox' do |vb|
     vb.gui = true
-  # vb.memory = "1024"
-end
+  end
 
-config.vm.define "server1" do |server1|
-    server1.vm.hostname = "server1"
-    server1.vm.provision "yum", type: "shell",
-      inline: "sudo yum install git -y"
-    server1.vm.provision "shell", inline: "git clone https://github.com/bandzzz/training.git"
-    server1.vm.provision "shell", inline: "cat training/hello.txt"
-    server1.vm.provision "shell", inline: "echo '172.20.20.11  server2' >> /etc/hosts"
-    server1.vm.network "private_network", ip: "172.20.20.10"
-end
-config.vm.define "server2" do |server2|
-    server2.vm.hostname = "server2"
-    server2.vm.provision "shell", inline: "echo '172.20.20.10  server1' >> /etc/hosts"
-    server2.vm.network "private_network", ip: "172.20.20.11"
-end
-config.vm.box_check_update = false
+  (1..TVM).each do |i|
+    config.vm.define "tomcat#{i}" do |tomcat|
+      tomcat.vm.network 'private_network', ip: "172.20.20.#{1 + i}"
+      tomcat.vm.provision "shell", inline: "yum -y install tomcat tomcat-webapps tomcat-admin-webapps"
+      tomcat.vm.provision "shell", inline: "systemctl enable tomcat"
+      tomcat.vm.provision "shell", inline: "systemctl start tomcat"
+      tomcat.vm.provision "shell", inline: "systemctl stop firewalld"
+      tomcat.vm.provision "shell", inline: "mkdir -p /usr/share/tomcat/webapps/test/"
+      tomcat.vm.provision "shell", inline: "echo 'tomcat#{i}' >> /usr/share/tomcat/webapps/test/index.html"
+    end
+  end
+
+    config.vm.define "httpd" do |httpd|
+      httpd.vm.hostname = "httpd"
+      httpd.vm.network "private_network", ip: "172.20.20.10"
+      httpd.vm.network "forwarded_port", guest: 80, host: 8080
+      httpd.vm.provision "shell", inline: "yum -y install httpd"
+      httpd.vm.provision "shell", inline: "systemctl enable httpd"
+      httpd.vm.provision "shell", inline: "systemctl start httpd"
+      httpd.vm.provision "shell", inline: "systemctl stop firewalld"
+      httpd.vm.provision "shell", inline: "cp /vagrant/mod_jk.so /etc/httpd/modules/"
+      httpd.vm.provision "shell", type: "shell", path: "./httpd.sh"
+    end
+  end
+
+
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -57,9 +79,11 @@ config.vm.box_check_update = false
   #
   # config.vm.provider "virtualbox" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-
+  #   vb.memory = "1024"
+  # end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -71,4 +95,3 @@ config.vm.box_check_update = false
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-end
