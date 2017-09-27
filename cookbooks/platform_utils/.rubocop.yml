@@ -1,0 +1,41 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+
+AlignParameters:
+  Enabled: false
+LineLength:
+  Enabled: false
+Lint/UnusedBlockArgument:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Max: 8
+Metrics/PerceivedComplexity:
+  Max: 10
+Style/BlockComments:
+  Enabled: false
+Style/BlockDelimiters:
+  Enabled: false
+Style/ExtraSpacing:
+  Enabled: false
+Style/FileName:
+  Enabled: false
+Style/LeadingCommentSpace:
+  Enabled: false
+Style/RescueModifier:
+  Enabled: false
+Style/SpaceBeforeFirstArg:
+  Enabled: false
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+Style/WordArray:
+  Enabled: false
+
+#Style/AccessorMethodName:
+#  Enabled: false
+Metrics/MethodLength:
+  Max: 60
+Metrics/ModuleLength:
+  Max: 150

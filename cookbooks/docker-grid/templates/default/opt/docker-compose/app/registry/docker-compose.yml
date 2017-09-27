@@ -1,0 +1,7 @@
+<%
+config = node['docker-grid']['registry']['docker-compose']['config']
+
+require 'yaml'
+yaml_str = config.to_hash.to_yaml
+-%>
+<%= yaml_str %>

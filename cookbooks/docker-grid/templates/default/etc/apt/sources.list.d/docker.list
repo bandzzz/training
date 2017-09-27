@@ -1,0 +1,20 @@
+<%
+platform = node['platform']
+override_apt_line = node['docker-grid']['apt_repo']['override_apt_line']
+if !override_apt_line.nil? && !override_apt_line.empty?
+-%>
+<%= override_apt_line %>
+<%
+else
+  if platform == 'debian'
+-%>
+#deb [arch=amd64] https://download.docker.com/linux/debian <%= node['lsb']['codename'] %> stable
+deb <%= node['docker-grid']['apt_repo']['url'] %> debian-<%= node['lsb']['codename'] %> main
+<%
+  elsif platform == 'ubuntu'
+-%>
+deb <%= node['docker-grid']['apt_repo']['url'] %> ubuntu-<%= node['lsb']['codename'] %> main
+<%
+  end
+end
+-%>

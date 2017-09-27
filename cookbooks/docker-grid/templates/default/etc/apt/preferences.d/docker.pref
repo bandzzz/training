@@ -1,0 +1,3 @@
+Package: <%= @pkg_name %>
+Pin: version <%= node['docker-grid']['engine']['version'] %>
+Pin-Priority: 1001

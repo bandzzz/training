@@ -1,0 +1,54 @@
+{
+  "name": "platform_utils",
+  "description": "Platform Utilities",
+  "long_description": "platform_utils Cookbook\n=======================\n\nThis cookbook provides platform utility recipes.\n\n## Contents\n\n- [Requirements](#requirements)\n    - [Platforms](#platforms)\n    - [Packages](#packages)\n    - [Cookbooks](#cookbooks)\n- [Attributes](#attributes)\n- [Usage](#usage)\n    - [Recipes](#recipes)\n        - [platform_utils::default](#platform_utilsdefault)\n        - [platform_utils::crond (ver. 0.4.0 or later)](#platform_utilscrond-ver-040-or-later)\n        - [platform_utils::kernel_modules (ver. 0.4.2 or later)](#platform_utilskernel_modules-ver-042-or-later)\n        - [platform_utils::kernel_user_namespace (ver. 0.4.2 or later)](#platform_utilskernel_user_namespace-ver-042-or-later)\n        - [platform_utils::ntpd (ver. 0.4.0 or later)](#platform_utilsntpd-ver-040-or-later)\n        - [platform_utils::platform_update](#platform_utilsplatform_update)\n        - [platform_utils::subid](#platform_utilssubid)\n        - [platform_utils::sudo](#platform_utilssudo)\n        - [platform_utils::sysctl (ver. 0.4.3 or later)](#platform_utilssysctl-ver-043-or-later)\n        - [platform_utils::tcp_wrappers (ver. 0.4.0 or later)](#platform_utilstcp_wrappers-ver-040-or-later)\n- [License and Authors](#license-and-authors)\n\n## Requirements\n\n### Platforms\n- CentOS, Red Hat Enterprise Linux\n- Debian, Ubuntu\n\n### Packages\n- none.\n\n### Cookbooks\n- none.\n\n## Attributes\n\n|Key|Type|Description, example|Default|\n|:--|:--|:--|:--|\n|`['platform_utils']['kernel_modules']['loaded_modules']`|Array|Loaded extra kernel module names.|`[]`|\n|`['platform_utils']['platform_update']['auto_update']`|Boolean|whether update automatically or not.|`true`|\n|`['platform_utils']['platform_update']['timer']`|Symbol|update execution timing.|`:delayed`|\n|`['platform_utils']['platform_update']['apt-get']['command']`|String|apt-get upgrade/dist-upgrade command string.|`'apt-get upgrade -y'`|\n|`['platform_utils']['platform_update']['yum']['command']`|String|yum update command string.|`'yum update -y'`|\n|`['platform_utils']['subid']['users']`|Array|Subordinate user (=group) names.|`[]`|\n|`['platform_utils']['subid']['notifies']`|Array, Hash|Notifies by the subordinate user/group file update.|`[]`, See `attributes/default.rb`|\n|`['platform_utils']['sudo']['sudoers.d']`|Hash|sudoers file configurations.|`{}` See `attributes/default.rb`|\n|`['platform_utils']['sudo']['group']['members']`|Array|Members appended to the `sudo` group.|`[]`|\n|`['platform_utils']['sysctl']['configs']`|Hash|sysctl configurations. (ver. 0.4.3 or later)|`{}`, See `attributes/default.rb`|\n|`['platform_utils']['tcp_wrappers']['host_allow']`|Array|Entries in `/etc/hosts.allow` (ver. 0.4.0 or later)|`[]`|\n|`['platform_utils']['tcp_wrappers']['host_deny']`|Array|Entries in `/etc/hosts.deny` (ver. 0.4.0 or later)|`[]`|\n\n## Usage\n\n### Recipes\n\n#### platform_utils::default\n\nThis recipe does nothing.\n\n#### platform_utils::crond (ver. 0.4.0 or later)\n\nThis recipe installs cron package and enables & starts the service.\n\n#### platform_utils::kernel_modules (ver. 0.4.2 or later)\n\nThis recipe loads the extra kernel modules.\n\n#### platform_utils::kernel_user_namespace (ver. 0.4.2 or later)\n\nThis recipe activates the kernel user namespace feature.\n\n#### platform_utils::ntpd (ver. 0.4.0 or later)\n\nThis recipe installs ntpd package and enables & starts the service.\n\n#### platform_utils::platform_update\n\nThis recipe updates the platform.\n\n#### platform_utils::subid\n\nThis recipe sets up the `/etc/subuid` and the `/etc/subgid`.\n\n#### platform_utils::sudo\n\nThis recipe sets up sudo.\n\n#### platform_utils::sysctl (ver. 0.4.3 or later)\n\nThis recipe sets up sysctl (Kernel parameters).\n\n#### platform_utils::tcp_wrappers (ver. 0.4.0 or later)\n\nThis recipe sets up hosts.allow and hosts.deny.\n\n## License and Authors\n\n- Author:: whitestar at osdn.jp\n\n```text\nCopyright 2016-2017, whitestar\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n```\n",
+  "maintainer": "whitestar",
+  "maintainer_email": "",
+  "license": "Apache 2.0",
+  "platforms": {
+    "centos": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+
+  },
+  "recommendations": {
+
+  },
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "providing": {
+
+  },
+  "replacing": {
+
+  },
+  "attributes": {
+
+  },
+  "groupings": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "0.4.4",
+  "source_url": "http://scm.osdn.jp/gitroot/metasearch/grid-chef-repo.git",
+  "issues_url": "https://osdn.jp/projects/metasearch/ticket",
+  "privacy": false,
+  "chef_versions": [
+
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+
+  ]
+}

@@ -1,0 +1,10 @@
+<%
+config = node['docker-grid']['yum_repo']
+-%>
+[dockerrepo]
+name=Docker Repository
+baseurl=<%= config['baseurl'] %>
+# dockerrepo is disabled by default to prevent automatic update.
+enabled=0
+gpgcheck=<%= config['gpgcheck'] %>
+gpgkey=<%= config['gpgkey'] %>
